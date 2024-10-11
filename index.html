@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Virtual Birthday Card</title>
     <!-- Include the Particles.js library -->
-    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/fireworks-js@latest/dist/index.umd.js"></script>
     <style>
         body {
             display: flex;
@@ -267,8 +267,6 @@
     <source src="https://raw.githubusercontent.com/rinotruc/virtual-card/main/mistletoe%201.L.mp3" type="audio/mpeg">
 </audio>
     <!-- Fireworks Container (Particles.js will render fireworks here) -->
-<div id="fireworks-container"></div>
-
 <script>
     let holdTimer;
 
@@ -311,58 +309,64 @@
     document.getElementById('cake').addEventListener('touchcancel', function() {
         clearTimeout(holdTimer); // Clear the timer if the touch is cancelled
     });
+    const container = document.getElementById('fireworks-container');
+    const fireworks = new Fireworks(container, {
+        autoresize: true,
+        opacity: 0.5,
+        acceleration: 1.05,
+        friction: 0.98,
+        gravity: 1.5,
+        particles: 150,
+        traceLength: 3,
+        traceSpeed: 10,
+        explosion: 5,
+        intensity: 30,
+        flickering: 50,
+        lineStyle: 'round',
+        hue: {
+            min: 0,
+            max: 360
+        },
+        delay: {
+            min: 20,
+            max: 40
+        },
+        rocketsPoint: {
+            min: 50,
+            max: 50
+        },
+        boundaries: {
+            x: 50,
+            y: 50,
+            width: container.clientWidth,
+            height: container.clientHeight
+        },
+        sound: {
+            enable: true, // Enable sound effects
+            files: [
+                'https://fireworks.js.org/sounds/explosion0.mp3',
+                'https://fireworks.js.org/sounds/explosion1.mp3',
+                'https://fireworks.js.org/sounds/explosion2.mp3'
+            ],
+            volume: {
+                min: 1,
+                max: 2
+            }
+        }
+    });
 
-    // Show fireworks after 5 seconds of holding
+    // Show fireworks after holding the cake for 5 seconds
     function showFireworks() {
-        document.getElementById('cake-container').style.display = 'none'; // Hide the cake
-        document.getElementById('fireworks-container').style.display = 'block'; // Show fireworks container
+        console.log("Fireworks triggered");
 
-        // Initialize Particles.js for fireworks effect
-        particlesJS('fireworks-container', {
-            "particles": {
-                "number": {
-                    "value": 100,
-                    "density": {
-                        "enable": true,
-                        "value_area": 800
-                    }
-                },
-                "color": {
-                    "value": ["#ff0000", "#ffff00", "#00ff00", "#0000ff"] // Red, Yellow, Green, Blue colors
-                },
-                "shape": {
-                    "type": "circle"
-                },
-                "opacity": {
-                    "value": 1,
-                    "random": true
-                },
-                "size": {
-                    "value": 10,
-                    "random": true
-                },
-                "move": {
-                    "enable": true,
-                    "speed": 10,
-                    "direction": "none",
-                    "random": true,
-                    "out_mode": "out"
-                }
-            },
-            "interactivity": {
-                "detect_on": "canvas",
-                "events": {
-                    "onhover": {
-                        "enable": false
-                    },
-                    "onclick": {
-                        "enable": false
-                    }
-                }
-            },
-            "retina_detect": true
-        });
+        // Hide the cake container
+        document.getElementById('cake-container').style.display = 'none';
+
+        // Start the fireworks animation
+        fireworks.start(); // Fireworks continue indefinitely
     }
+
+        
 </script>
 
 </script>
