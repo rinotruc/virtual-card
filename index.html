@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Virtual Birthday Card</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh; 
+            margin: 0;
+            background-color: #f0f0f0;
+            font-family: Arial, sans-serif;
+        }
+        .card {
+            width: 90%;
+            max-width: 400px;
+            height: 60vh;
+            max-height: 600px;
+            perspective: 1000px;
+            cursor: pointer;
+        }
+        .inner-card {
+            width: 100%;
+            height: 100%;
+            transition: transform 1s;
+            transform-style: preserve-3d;
+            position: relative;
+            transform: rotateY(0);
+        }
+        .inner-card.open {
+            transform: rotateY(180deg);
+        }
+        .front, .back {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            backface-visibility: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 10px;
+        }
+        .front {
+            background: url('/mnt/data/Pink Illustrative Happy Birthday Card.png') no-repeat center;
+            background-size: cover;
+        }
+        .back {
+            background-color: #fff;
+            transform: rotateY(180deg);
+            padding: 20px;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        .back img {
+            width: 100%;
+            border-radius: 10px;
+        }
+        .gift-box {
+            font-size: 40px;
+            cursor: pointer;
+            color: #ff6347;
+            padding: 20px;
+        }
+        .gift-box:hover {
+            transform: scale(1.2);
+        }
+        .album-popup {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 80%;
+            height: 80%;
+            background: rgba(0, 0, 0, 0.8);
+            padding: 20px;
+            overflow-y: scroll;
+            border-radius: 10px;
+        }
+        .album-popup img {
+            width: 100%;
+            max-width: 300px;
+            margin: 10px;
+            border-radius: 10px;
+        }
+        .close-btn {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-size: 30px;
+            color: white;
+            cursor: pointer;
+        }
+        @media (max-width: 768px) {
+            .card {
+                width: 95%;
+                height: 70vh;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<!-- Birthday Card -->
+<div class="card" onclick="openCard()">
+    <div class="inner-card" id="card">
+        <!-- Front Side -->
+        <div class="front">
+            <!-- Front side of the card (Image) -->
+        </div>
+        
+        <!-- Inside of the card -->
+        <div class="back">
+            <img src="https://yourusername.github.io/yourrepo/inside_card.png" alt="Inside card design" style="width: 100%; border-radius: 10px;">
+            <div class="gift-box" onclick="showAlbum(event)">🎁</div>
+        </div>
+    </div>
+</div>
+
+<!-- Album Popup -->
+<div class="album-popup" id="albumPopup">
+    <div class="close-btn" onclick="closeAlbum()">✖</div>
+    <!-- Image Gallery inside the popup -->
+    <img src="your-image-1-url.jpg" alt="Image 1">
+    <img src="your-image-2-url.jpg" alt="Image 2">
+    <img src="your-image-3-url.jpg" alt="Image 3">
+</div>
+
+<script>
+    function openCard() {
+        document.getElementById('card').classList.toggle('open');
+    }
+
+    function showAlbum(event) {
+        event.stopPropagation();
+        document.getElementById('albumPopup').style.display = 'block';
+    }
+
+    function closeAlbum() {
+        document.getElementById('albumPopup').style.display = 'none';
+    }
+</script>
+
+</body>
+</html>
