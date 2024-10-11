@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Virtual Birthday Card</title>
+    <!-- Include the Particles.js library -->
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
     <style>
         body {
             display: flex;
@@ -11,14 +13,47 @@
             align-items: center;
             height: 100vh; 
             margin: 0;
-            background-color: #f0f0f0;
+            background-color: #ffc0cb;
             font-family: Arial, sans-serif;
         }
+        /* Fireworks container to render the Particles.js fireworks */
+        #fireworks-container {
+            display: none;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: black;
+        }
+        /* Cake container where the cake image is shown */
+        #cake-container {
+            display: none;/* Initially hidden */
+            text-align: center;
+        }
+
+        /* Cake image with cursor pointer to show it's clickable */
+        #cake {
+            width: 300px;
+            height: 300px;
+            background-image: url('https://raw.githubusercontent.com/rinotruc/sn_din/main/cake2.jpg');
+            background-size: cover;
+            background-position: center;
+            cursor: pointer;
+            margin-top: 10px
+        }
+        /* Prevent copy, selection, and tap highlight */
+        #cake, p, button, div {
+            -webkit-touch-callout: none; /* Disable iOS context menu */
+            -webkit-user-select: none; /* Disable text selection */
+            -webkit-tap-highlight-color: transparent; /* Disable highlight on tap */
+            user-select: none; /* Disable selection for other browsers */
+        }
         .card {
-            width: 90%;
+            width: 396px;
             max-width: 400px;
-            height: 60vh;
-            max-height: 600px;
+            height: auto;
+            max-height: 800px;
             perspective: 1000px;
             cursor: pointer;
         }
@@ -44,8 +79,9 @@
             border-radius: 10px;
         }
         .front {
-            background: url('/mnt/data/Pink Illustrative Happy Birthday Card.png') no-repeat center;
-            background-size: cover;
+            background: url('https://raw.githubusercontent.com/rinotruc/virtual-card/refs/heads/main/front_card.png') no-repeat center;
+            background-size: contain;
+            background-position: center;
         }
         .back {
             background-color: #fff;
@@ -54,10 +90,14 @@
             text-align: center;
             display: flex;
             flex-direction: column;
-            justify-content: space-between;
+            justify-content: center;
+            align-items: center;
+            height: 100%;
+            box-sizing: border-box;
         }
         .back img {
             width: 100%;
+            margin: 0 auto;
             border-radius: 10px;
         }
         .gift-box {
@@ -75,31 +115,47 @@
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            width: 80%;
-            height: 80%;
-            background: rgba(0, 0, 0, 0.8);
+            width: 90%;
+            height: 90%;
+            background: rgba(173, 216, 230, 0.9);
             padding: 20px;
             overflow-y: scroll;
             border-radius: 10px;
         }
-        .album-popup img {
+        .album-item {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .album-item img {
             width: 100%;
             max-width: 300px;
-            margin: 10px;
+            margin-bottom: 10px;
             border-radius: 10px;
+        }
+        .album-item p {
+            color: black;
+            font-size: 16px;
         }
         .close-btn {
             position: absolute;
             top: 20px;
             right: 20px;
             font-size: 30px;
-            color: white;
+            color: black;
             cursor: pointer;
+        }
+        .close-btn:hover {
+            transform: scale(1.2);
         }
         @media (max-width: 768px) {
             .card {
                 width: 95%;
                 height: 70vh;
+            }
+        }
+        @media (max-width: 480px) {
+            .album-item img {
+                max-width: 100%;
             }
         }
     </style>
@@ -116,7 +172,7 @@
         
         <!-- Inside of the card -->
         <div class="back">
-            <img src="https://yourusername.github.io/yourrepo/inside_card.png" alt="Inside card design" style="width: 100%; border-radius: 10px;">
+            <img src="https://raw.githubusercontent.com/rinotruc/virtual-card/refs/heads/main/baba.png" style="width: 100%; border-radius: 10px;">
             <div class="gift-box" onclick="showAlbum(event)">🎁</div>
         </div>
     </div>
@@ -126,14 +182,139 @@
 <div class="album-popup" id="albumPopup">
     <div class="close-btn" onclick="closeAlbum()">✖</div>
     <!-- Image Gallery inside the popup -->
-    <img src="your-image-1-url.jpg" alt="Image 1">
-    <img src="your-image-2-url.jpg" alt="Image 2">
-    <img src="your-image-3-url.jpg" alt="Image 3">
+    <div class="album-item">
+        <img src="https://raw.githubusercontent.com/rinotruc/sn_din/main/IMG_9407.jpeg" alt="Image 1">
+        <p>là trái tim dữ chưa má</p>
+    </div>
+
+    
+
+    <!-- Close button at the bottom of the album -->
+    <button id="close-album-btn" class="close-btn" onclick="showCake()">luớt xong ảnh rùi lên đây bấm nút này</button>
 </div>
+
+    <!-- Cake and Candle Image Container (Initially Hidden) -->
+<!-- Cake and Candle Image Container (Initially Hidden) -->
+<div id="cake-container">
+    <div id="cake" style="width: 300px; height: 300px; background-image: url('https://raw.githubusercontent.com/rinotruc/sn_din/main/cake2.jpg'); background-size: cover; background-position: center; cursor: pointer;">
+        <p>Click and hold the candle for 5 seconds to make a wish!</p>
+    </div>
+</div>
+
+      <!-- Background Music -->
+<audio id="background-music" loop>
+    <source src="https://raw.githubusercontent.com/rinotruc/sn_din/main/Happy%20Birthday%20(Piano%20Version).mp3" type="audio/mpeg">
+</audio>
+    <!-- Fireworks Container (Particles.js will render fireworks here) -->
+<div id="fireworks-container"></div>
+
+<script>
+    let holdTimer;
+
+    
+    // Show Cake function (this is the missing part)
+   function showCake() {
+    // Hide the album popup
+    document.getElementById('albumPopup').style.display = 'none';
+
+    // Hide the card (inside and outside)
+    document.querySelector('.card').style.display = 'none';
+
+    // Show the cake container
+    document.getElementById('cake-container').style.display = 'block';
+}
+
+
+    // Handle click and hold for the entire cake image
+    document.getElementById('cake').addEventListener('mousedown', function() {
+        holdTimer = setTimeout(showFireworks, 5000); // Start the timer for 5 seconds
+    });
+
+    document.getElementById('cake').addEventListener('mouseup', function() {
+        clearTimeout(holdTimer); // Clear the timer if the user releases before 5 seconds
+    });
+
+    document.getElementById('cake').addEventListener('mouseleave', function() {
+        clearTimeout(holdTimer); // Clear the timer if the user moves the mouse away from the image
+    });
+
+    // For mobile (touch devices)
+    document.getElementById('cake').addEventListener('touchstart', function() {
+        holdTimer = setTimeout(showFireworks, 5000); // Start the timer for 5 seconds
+    });
+
+    document.getElementById('cake').addEventListener('touchend', function() {
+        clearTimeout(holdTimer); // Clear the timer if the user releases before 5 seconds
+    });
+
+    document.getElementById('cake').addEventListener('touchcancel', function() {
+        clearTimeout(holdTimer); // Clear the timer if the touch is cancelled
+    });
+
+    // Show fireworks after 5 seconds of holding
+    function showFireworks() {
+        document.getElementById('cake-container').style.display = 'none'; // Hide the cake
+        document.getElementById('fireworks-container').style.display = 'block'; // Show fireworks container
+
+        // Initialize Particles.js for fireworks effect
+        particlesJS('fireworks-container', {
+            "particles": {
+                "number": {
+                    "value": 100,
+                    "density": {
+                        "enable": true,
+                        "value_area": 800
+                    }
+                },
+                "color": {
+                    "value": ["#ff0000", "#ffff00", "#00ff00", "#0000ff"] // Red, Yellow, Green, Blue colors
+                },
+                "shape": {
+                    "type": "circle"
+                },
+                "opacity": {
+                    "value": 1,
+                    "random": true
+                },
+                "size": {
+                    "value": 10,
+                    "random": true
+                },
+                "move": {
+                    "enable": true,
+                    "speed": 10,
+                    "direction": "none",
+                    "random": true,
+                    "out_mode": "out"
+                }
+            },
+            "interactivity": {
+                "detect_on": "canvas",
+                "events": {
+                    "onhover": {
+                        "enable": false
+                    },
+                    "onclick": {
+                        "enable": false
+                    }
+                }
+            },
+            "retina_detect": true
+        });
+    }
+</script>
+
+</script>
+
 
 <script>
     function openCard() {
         document.getElementById('card').classList.toggle('open');
+        // Play the background music after user interaction (card click)
+        var music = document.getElementById("background-music");
+        if (music.paused) {
+            music.play();
+        }
     }
 
     function showAlbum(event) {
@@ -144,6 +325,7 @@
     function closeAlbum() {
         document.getElementById('albumPopup').style.display = 'none';
     }
+    
 </script>
 
 </body>
