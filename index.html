@@ -19,7 +19,7 @@
         /* Fireworks container to render the Particles.js fireworks */
         #fireworks-container {
             display: none;
-            position: fixed;
+            position: absolute;
             top: 0;
             left: 0;
             width: 100%;
@@ -137,8 +137,6 @@
             font-size: 16px;
         }
         .close-btn {
-            font-size: 14px; /* Adjust the font size */
-            padding: 5px 10px;
             position: absolute;
             top: 20px;
             right: 20px;
@@ -267,6 +265,8 @@
     <source src="https://raw.githubusercontent.com/rinotruc/virtual-card/main/mistletoe%201.L.mp3" type="audio/mpeg">
 </audio>
     <!-- Fireworks Container (Particles.js will render fireworks here) -->
+    <div id="fireworks-container"></div>
+
 <script>
     let holdTimer;
 
