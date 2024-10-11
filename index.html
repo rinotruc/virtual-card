@@ -19,7 +19,7 @@
         /* Fireworks container to render the Particles.js fireworks */
         #fireworks-container {
             display: none;
-            position: absolute;
+            position: fixed;
             top: 0;
             left: 0;
             width: 100%;
@@ -310,6 +310,7 @@
         clearTimeout(holdTimer); // Clear the timer if the touch is cancelled
     });
     const container = document.getElementById('fireworks-container');
+if (container) {
     const fireworks = new Fireworks(container, {
         autoresize: true,
         opacity: 0.5,
@@ -358,15 +359,17 @@
     
     // Show fireworks after holding the cake for 5 seconds
     function showFireworks() {
-        console.log("Fireworks triggered");
+    console.log("Fireworks triggered");
+    
+    // Hide the cake container
+    const cakeContainer = document.getElementById('cake-container');
+    if (cakeContainer) cakeContainer.style.display = 'none';
 
-        // Hide the cake container
-        const cakeContainer = document.getElementById('cake-container');
-        if (cakeContainer) cakeContainer.style.display = 'none';
+    // Start the fireworks animation
+    console.log(fireworks); // Check if fireworks is properly initialized
+    fireworks.start(); // Fireworks should start now
+}
 
-        // Start the fireworks animation
-        fireworks.start(); // Fireworks continue indefinitely
-    }
         
 </script>
 
