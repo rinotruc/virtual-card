@@ -355,17 +355,18 @@
         }
     });
 
+    
     // Show fireworks after holding the cake for 5 seconds
     function showFireworks() {
         console.log("Fireworks triggered");
 
         // Hide the cake container
-        document.getElementById('cake-container').style.display = 'none';
+        const cakeContainer = document.getElementById('cake-container');
+        if (cakeContainer) cakeContainer.style.display = 'none';
 
         // Start the fireworks animation
         fireworks.start(); // Fireworks continue indefinitely
     }
-
         
 </script>
 
