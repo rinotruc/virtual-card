@@ -273,43 +273,46 @@
     
     // Show Cake function (this is the missing part)
    function showCake() {
-    // Hide the album popup
-    document.getElementById('albumPopup').style.display = 'none';
+    const albumPopup = document.getElementById('albumPopup');
+    const cakeContainer = document.getElementById('cake-container');
+    
+    if (albumPopup) albumPopup.style.display = 'none'; // Hide the album popup
 
-    // Hide the card (inside and outside)
-    document.querySelector('.card').style.display = 'none';
+    const card = document.querySelector('.card');
+    if (card) card.style.display = 'none'; // Hide the card (inside and outside)
 
-    // Show the cake container
-    document.getElementById('cake-container').style.display = 'block';
+    if (cakeContainer) cakeContainer.style.display = 'block'; // Show the cake container
 }
 
-
-    // Handle click and hold for the entire cake image
-    document.getElementById('cake').addEventListener('mousedown', function() {
+// Handle click and hold for the entire cake image
+const cakeElement = document.getElementById('cake');
+if (cakeElement) {
+    cakeElement.addEventListener('mousedown', function() {
         holdTimer = setTimeout(showFireworks, 5000); // Start the timer for 5 seconds
     });
 
-    document.getElementById('cake').addEventListener('mouseup', function() {
+    cakeElement.addEventListener('mouseup', function() {
         clearTimeout(holdTimer); // Clear the timer if the user releases before 5 seconds
     });
 
-    document.getElementById('cake').addEventListener('mouseleave', function() {
+    cakeElement.addEventListener('mouseleave', function() {
         clearTimeout(holdTimer); // Clear the timer if the user moves the mouse away from the image
     });
 
     // For mobile (touch devices)
-    document.getElementById('cake').addEventListener('touchstart', function() {
+    cakeElement.addEventListener('touchstart', function(e) {
+        e.preventDefault(); // Prevent default touch behavior
         holdTimer = setTimeout(showFireworks, 5000); // Start the timer for 5 seconds
     });
 
-    document.getElementById('cake').addEventListener('touchend', function() {
+    cakeElement.addEventListener('touchend', function() {
         clearTimeout(holdTimer); // Clear the timer if the user releases before 5 seconds
     });
 
-    document.getElementById('cake').addEventListener('touchcancel', function() {
+    cakeElement.addEventListener('touchcancel', function() {
         clearTimeout(holdTimer); // Clear the timer if the touch is cancelled
     });
-
+}
     // Show fireworks after 5 seconds of holding
     const container = document.getElementById('fireworks-container');
 if (container) {
